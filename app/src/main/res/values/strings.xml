@@ -1,0 +1,67 @@
+<resources>
+    <!--    <string name="app_name">TourBook</string>-->
+    <!--    <string name="empty_note">Your note is empty, create a new note now</string>-->
+    <!--    <string name="example_CDATA_string">-->
+    <!--        <CDATA>-->
+    <!--            <html>-->
+    <!--                <body>-->
+    <!--                    <h1>In case the note list is empty</h1>-->
+    <!--                    <p>When the note list is empty. you should click on the <b>+</b>-->
+    <!--                        button on the right bottom of screen, and follow the instruction to create your first note</p>-->
+    <!--                    <p><b><font color="#0000FF">Hope you enjoy</font></b></p>-->
+    <!--                </body>-->
+    <!--            </html>-->
+    <!--        </CDATA>-->
+    <!--    </string>-->
+    <!--    <string name="example_SpannableString">In case the note list is empty\nWhen the note list is empty.-->
+    <!--        You should click on the + button on the right-bottom of screen,-->
+    <!--        and follow the instruction to create your first note.\n-->
+    <!--        Hope you enjoy-->
+    <!--    </string>-->
+    <!--    <string name="example_Formatting_String">Today is %1$s\nYou have %2$d note now.-->
+    <!--        Let click + button to create new note.\n\nDid you see this %3$f number?-->
+    <!--    </string>-->
+    <!--    <plurals name="example_plurals">-->
+    <!--        <item quantity="one">You have %1d note now</item>-->
+    <!--        <item quantity="other">You have %1d notes now</item>-->
+    <!--    </plurals>-->
+    <!--    <string-array name="example_string_array">-->
+    <!--        <item>Mercury</item>-->
+    <!--        <item>Venus</item>-->
+    <!--        <item>Earth</item>-->
+    <!--        <item>Mars</item>-->
+    <!--    </string-array>-->
+
+    <string name="app_name">TourBook</string>
+    <!--    Common Action -->
+    <string name="common_action_close">Close</string>
+    <string name="common_action_save">Save</string>
+
+    <!--    Menu Item-->
+    <string name="menu_item_search">Search</string>
+    <string name="menu_item_about_app">About App</string>
+    <string name="menu_item_help">Help</string>
+    <string name="menu_item_version_app">Version %s</string>
+
+    <!--    Main Screen-->
+    <string name="mainscreen_add_catergory">Add Catergory</string>
+    <string name="mainscreen_add_note">Add Note</string>
+    <string name="mainscreen_empty_note">Your note is empty, let start to create your first note now</string>
+    <string name="mainscreen_input_searching_content">Input Searching Content</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
+    <!--    Note Detail Screen-->
+    <string name="note_detail_share">Share</string>
+    <string name="note_detail_delete">Delete</string>
+    <string name="note_detail_catergory">Catergory</string>
+    <string name="note_detail_note_detail">Detail</string>
+    <string name="note_detail_other_information">Other Information</string>
+    <string name="note_detail_map_location">Map Location</string>
+    <string name="note_detail_note_name_hint">Name</string>
+    <string name="note_detail_note_detail_hint">Description</string>
+    <string name="note_detail_add_note_hint">Your Note (Can Add Later)</string>
+    <string name="note_detail_address_hint">Address</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

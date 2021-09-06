@@ -1,0 +1,58 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+<!--    <string name="app_name">TourBook</string>-->
+<!--    <string name="empty_note">Bạn chưa có ghi chú nào cho mình, hãy tạo mới ghi chú cho mình từ hôm nay</string>-->
+<!--    <string name="example_CDATA_string">-->
+<!--        <CDATA>-->
+<!--            <html>-->
+<!--                <body>-->
+<!--                    <h1>Trường hợp danh sách ghi chú trống\n</h1>-->
+<!--                    <p>Khi danh sách ghi chú trống. \nbạn hãy nhấp vào nút dấu <b>+</b> nằm ở bên phải phía dưới màn hình, và làm theo hướng dẫn để tạo ghi chú mới\n</p>-->
+<!--                    <p><b><font color="#000FF">Chúc bạn vui vẻ</font></b></p>-->
+<!--                </body>-->
+<!--            </html>-->
+<!--        </CDATA>-->
+<!--    </string>-->
+<!--    <string name="example_SpannableString">-->
+
+
+<!--    </string>-->
+<!--    <string name="example_Formatting_String">Today is %1$s\nYou have %2$d note now. Let click + button to create new note.\n\nDid you see this %3$f number?</string>-->
+<!--    <plurals name="example_plurals">-->
+<!--        <item quantity="other">Bạn đã có %1d ghi chú</item>-->
+<!--    </plurals>-->
+<!--    <string-array name="example_string_array">-->
+<!--        <item>Hành tinh Mercury</item>-->
+<!--        <item>Hành tinh Venus</item>-->
+<!--        <item>Hành tinh Earth</item>-->
+<!--        <item>Hành tinh Mars</item>-->
+<!--    </string-array>-->
+
+    <string name="app_name">TourBook</string>
+    <!--    Common Action -->
+    <string name="common_action_close">Đóng</string>
+    <string name="common_action_save">Lưu</string>
+
+    <!--    Menu Item-->
+    <string name="menu_item_search">Tìm Kiếm</string>
+    <string name="menu_item_about_app">Thông Tin Ứng Dụng</string>
+    <string name="menu_item_help">Giúp Đỡ</string>
+    <string name="menu_item_version_app">Phiên Bản %s</string>
+
+    <!--    Main Screen-->
+    <string name="mainscreen_add_catergory">Thêm Chủ Đề</string>
+    <string name="mainscreen_add_note">Thêm Địa Điểm</string>
+    <string name="mainscreen_empty_note">Bạn chưa có ghi chú nào cho mình, hãy tạo mới ghi chú cho mình từ hôm nay</string>
+    <string name="mainscreen_input_searching_content">Nhập nội dung tìm kiếm</string>
+
+    <!--    Note Detail Screen-->
+    <string name="note_detail_share">Chia Sẻ</string>
+    <string name="note_detail_delete">Xóa</string>
+    <string name="note_detail_catergory">Chủ Đề</string>
+    <string name="note_detail_note_detail">Chi Tiết Về Địa Điểm</string>
+    <string name="note_detail_other_information">Thông Tin Khác</string>
+    <string name="note_detail_map_location">Vị Trí Bản Đồ</string>
+    <string name="note_detail_note_name_hint">Tên Địa Điểm</string>
+    <string name="note_detail_note_detail_hint">Mô Tả Về Địa Điểm</string>
+    <string name="note_detail_add_note_hint">Ghi Chú - Có thể thêm vào sau..</string>
+    <string name="note_detail_address_hint">Địa Chỉ</string>
+</resources>
