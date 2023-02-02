@@ -1031,10 +1031,10 @@ ________________________________________________________________________________
                 * ``orientation`` là ``vertical``: ta nên thiết lập ``height`` của **View** con về **0dp**
             * khai báo thuộc tính trọng số:
                 * ``android:layout_weight="[trọng_số]"``
-                * [trọng_số]: là tỉ trọng lượng không gian mà **View** con sẽ giành được
+                * \[trọng_số]: là tỉ trọng lượng không gian mà **View** con sẽ giành được
         * Thuộc tính tổng trọng số (Weight Sum) của **LinearLayout**
             * ``android:weightSum="[tổng_trọng_số]"``
-                * [tổng_trọng_số]: tổng trọng số được phân bổ vào không gian màn hình
+                * \[tổng_trọng_số]: tổng trọng số được phân bổ vào không gian màn hình
                 * các **View** con sẽ khai báo trọng số ``weight`` của riêng nó, sao cho tổng trọng số của các **View** phải **<=** ``weightSum`` của **LinearLayout**
 
 * Thuộc Tính Lực Hấp Dẫn (Gravity) của **LinearLayout**
@@ -2278,12 +2278,9 @@ ________________________________________________________________________________
 ______________________________________________________________________________________
 #### Bitmap Image
 ______________________________________________________________________________________
-* đối với những định dạng ảnh Bitmap thông thường như PNG, JPG, GIF... thực chất là các ma trận điểm ảnh với số lượng
-cố định, ví dụ:
-  * ảnh bitmap 100*100px là 1 ma trận có ngang 100px dài 100px
-* đối với ảnh Bitmap 100*100px, nếu muốn hiển thị ảnh này ở kích thước 400*400px, thì mỗi px sẽ phải bị giãn nở ra, khiến
-toàn bộ ảnh sẽ có hiện tượng vỡ, nhòe, chính vì vậy khi tổ lưu trữ ảnh dạng Bitmap phải tạo ra nhiều **alternative resource**
-để kịp thời linh động trong khi ứng dụng được chạy thực tế.
+* đối với những định dạng ảnh Bitmap thông thường như PNG, JPG, GIF... thực chất là các ma trận điểm ảnh với số lượng cố định, ví dụ:
+  * ảnh bitmap 100\*100px là 1 ma trận có ngang 100px dài 100px
+* đối với ảnh Bitmap 100*100px, nếu muốn hiển thị ảnh này ở kích thước 400*400px, thì mỗi px sẽ phải bị giãn nở ra, khiến toàn bộ ảnh sẽ có hiện tượng vỡ, nhòe, chính vì vậy khi tổ lưu trữ ảnh dạng Bitmap phải tạo ra nhiều _alternative resource_ để kịp thời linh động trong khi ứng dụng được chạy thực tế.
 
 #### Vector Image
 ______________________________________________________________________________________
@@ -2299,13 +2296,9 @@ màn hình, chính vì vậy, dù ở bất cứ thiết bị màn hình nào �
   * dung lượng Project sau khi Publish nhẹ hơn do không cần tạo nhiều **Alternative Resource**
   * tổ chức ảnh Vector vào Resource cũng đơn giản vì không phải băn khoăn lưu trữ ở đâu, vì nó là dạng resource tự linh động
 * nhược điểm của ảnh Vector:
-  * CPU ở thiết bị thực thi chương trình phải hoạt động hết công suất để vừa đọc thông số ảnh Vector vừa vẽ ảnh lên màn
-  hình, nếu thiết bị vẽ nhiều ảnh Vector cùng lúc có thể gây giảm hiệu năng và trải nghiệm người dùng, Google khuyến cáo
-  nên giới hạn kích thước của ảnh Vector là 200*200dp khi được vẽ lên UI.
-  * giới hạn về khả năng của CPU ở mỗi thiết bị có thể vẽ ảnh Vector lên màn hình sẽ gây ra tình trạng không hiển thị, 
-  hoặc mất nét, mất một số bộ phận của ảnh.
-  * không được hỗ trợ từ Android 4.4 API 20 trở về trước, nếu muốn sử dụng ảnh Vector ở cả các hệ điều hành Android 4.4
-  API 20 trở về trước, phải xem xét lựa chọn cách thức tương thích ngược.
+  * CPU ở thiết bị thực thi chương trình phải hoạt động hết công suất để vừa đọc thông số ảnh Vector vừa vẽ ảnh lên màn hình, nếu thiết bị vẽ nhiều ảnh Vector cùng lúc có thể gây giảm hiệu năng và trải nghiệm người dùng, Google khuyến cáo nên giới hạn kích thước của ảnh Vector là 200\*200dp khi được vẽ lên UI.
+  * giới hạn về khả năng của CPU ở mỗi thiết bị có thể vẽ ảnh Vector lên màn hình sẽ gây ra tình trạng không hiển thị, hoặc mất nét, mất một số bộ phận của ảnh.
+  * không được hỗ trợ từ Android 4.4 API 20 trở về trước, nếu muốn sử dụng ảnh Vector ở cả các hệ điều hành Android 4.4 API 20 trở về trước, phải xem xét lựa chọn cách thức tương thích ngược.
 
 #### Lựa Chọn Phương Pháp Tương Thích Ngược Ảnh Vector Cho Android 4.4 API 20 Trở Về Trước
 ______________________________________________________________________________________
@@ -2878,7 +2871,7 @@ ________________________________________________________________________________
     * ``android:state_enabled=["true" | "false"]``: trạng thái được phép tương tác (enabled) của Widget
     * ``android:state_activated=["true" | "false"]``: trạng thái kích hoạt (activated) của Widget
     * ``android:state_window_focused=["true" | "false"]``: trạng thái focus của cửa sổ chứa Widget (vd: user đang tương tác với
-    1 cửa sổ, thì 1 widget notification hiện lên, thì focus của cửa sổ chứa widget notification đó sẽ mang giá trị ``false`)
+    1 cửa sổ, thì 1 widget notification hiện lên, thì focus của cửa sổ chứa widget notification đó sẽ mang giá trị ``false``
     * ``android:drawable="@[package:]drawable/drawable_resource"``: resource drawable tương ứng được gọi nếu **item** đáp ứng đủ
     các trạng thái đã định nghĩa
 
@@ -4355,7 +4348,7 @@ ________________________________________________________________________________
 1. mở file **build.gradle** cấp **module**
 2. tìm đến khối **dependencies {}**
 3. thêm dòng khai báo thư viện: <br/>``implementation 'com.android.support:design:28.0.0'`` <br/>như sau:
-```json
+```js
 dependencies {
     //noinspection GradleCompatible
     implementation 'com.android.support:design:28.0.0'
@@ -4384,7 +4377,7 @@ ________________________________________________________________________________
 ### 20.3.1. Khai Báo Thư Viện Trong Gradle Module <a id="20.3.1"></a>
 ______________________________________________________________________________________
 * khai báo thư viện ``implementation 'com.android.support:design:28.0.0'`` vào khối **dependencies**
-```json
+```js
 plugins {
     id 'com.android.application'
 }
@@ -15457,7 +15450,7 @@ public SQLiteOpenHelper(
 ```
 
 Data Type      |Parameter Name |Description
-_______________|_______________|________________________________________________________
+---------------|---------------|---------------------------------------------------
 Context        |context        |Context là một lớp trừu tượng của hệ thống, chứa thông tin môi trường ứng dụng, cung cấp các phương thức để có thể tương tác với hệ điều hành, giúp chúng ta dễ dàng truy cập và tương tác tới các tài nguyên của hệ thống...
 String         |name           |tên chỉ định cho database
 CursorFactory  |factory        |con trỏ dùng để query data, ở constructor này thường để ``null``
@@ -15613,7 +15606,7 @@ ________________________________________________________________________________
 * các tham số của phương thức query()
 
 Return Data Type   |Parameter Name       |Description
-___________________|_____________________|______________________________________________
+-------------------|---------------------|---------------------------------------------------
 boolean            | distinct            |``true`` nếu muốn mỗi dòng là duy nhất (không trùng lặp)
 String             | table               |tên table của database (tên của database và tên table là khác nhau)
 String[]           | columns             |mảng các cột sẽ trả về (tương tự lệnh SQL SELECT cột_1 cột_2 ...), <br/> để ``null`` sẽ trả về tất cả các cột (tương tự lệnh SQL SELECT *)
@@ -15637,7 +15630,7 @@ public long insert(String table, String nullColumnHack, ContentValues values) {
 * các tham số truyền vào insert()
 
 Return Data Type   |Parameter Name       |Description
-___________________|_____________________|______________________________________________
+-------------------|---------------------|-------------------------------------------------
 String             |table                |tên table
 String             |nullColumnHack       |thường để ``null`` (khi values empty, tham số này sẽ được sử dụng)
 ContentValues      |values               |đây là kiểu dữ liệu Map, chứa các cặp key/value, key là tên cột, value là giá trị của cột, các cặp key/value tạo thành 1 dòng
@@ -15668,7 +15661,7 @@ public int update(String table, ContentValues values, String whereClause, String
 * các tham số truyền vào update()
 
 Return Data Type   |Parameter Name       |Description
-___________________|_____________________|______________________________________________
+-------------------|---------------------|------------------------------------------------
 String             |table                |tên table
 ContentValues      |values               |đây là kiểu dữ liệu Map, chứa các cặp key/value, key là tên cột, value là giá trị của cột, các cặp key/value tạo thành 1 dòng
 String             |whereClause          |(vị trí update) chuỗi lệnh SQL WHERE clause để xác nhận update, nếu để ``null`` thì update sẽ áp dụng cho tất cả các dòng, <br/>có thể thêm dấu ``?`` vào whereClause, dấu ``?`` sẽ được thay thế bởi whereArgs 
