@@ -699,6 +699,35 @@ ________________________________________________________________________________
 
 54. [Media Local - raw Resource](#54)
 
+    54.1. [raw Resource Directory](#54.1)
+
+    54.2. [MediaPlayer - Play Sound Từ raw Resource](#54.2)
+
+    54.3. [Ví Dụ Play 1 File Sound Local](#54.3)
+
+    54.3.1. [activity_main.xml](#54.3.1)
+
+    54.3.2. [MainActivity.java](#54.3.2)
+
+    54.4. [MediaPlayer - VideoView Và MediaController](#54.4)
+
+    54.4.1. [activity_main.xml](#54.4.1)
+
+    54.4.2. [MainActivity.java](#54.4.2)
+
+55. [Media Online](#55)
+
+    55.1. [Media Online Sound](#55.1)
+
+    55.2. [Media Online Video](#55.2)
+
+56. [SQLite - Local DataBase Trong Android (Cơ Sỡ Dữ Liệu Cục Bộ)](#56)
+
+
+
+
+
+
 
 
 [DESIGN PATTERN SINGLETON]
@@ -7062,7 +7091,7 @@ ________________________________________________________________________________
 * UI của Fragment được quản lý bởi bộ đôi:
   * XyzFragment.java
     * chịu trách nhiệm xử lý các logic
-  * fragment_xyz.xml
+  * fragment_xyz.xmml
     * chịu trách nhiệm hiển thị UI
 * việc khởi tạo Fragment cũng được thực hiện bởi wizard tích hợp sẵn trong Android Studio
 * điểm khác biệt của Fragment so với Activity
@@ -7164,7 +7193,6 @@ bởi hệ thống:
         });
         ```
     * sau khi hoàn tất trả về đối tượng View của Fragment
-    
 >phương thức makeText kiểu Toast ở Fragment dùng có đôi chút khác biệt so với ở Activity.
 > >ở Activity: tham số Context truyền vào là của Activity cần hiển thị thông báo kiểu Toast
 > 
@@ -15089,4 +15117,636 @@ public class MainActivity extends AppCompatActivity {
 ______________________________________________________________________________________
 ______________________________________________________________________________________
 ______________________________________________________________________________________
+# 55. Media Online <a id="55"></a>
+______________________________________________________________________________________
+## 55.1. Media Online Sound <a id="55.1"></a>
+______________________________________________________________________________________
+* để có thể start() 1 Media Sound Online, trước tiên ứng dụng phải sủ dụng được quyền INTERNET khai báo trong AndroidManifest.xml
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+....
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+...
+</manifest>
+```
+* xử lý Logic Code
+  * cần phải có đường dẫn truy cập đến file Sound từ Server Online
+    * ``String urlMP3 = "https://khoapham.vn/download/vietnamoi.mp3";``
+  * khai báo 1 đối tượng MediaPlayer từ Constructor
+    * ``MediaPlayer mediaPlayer = new MediaPlayer();``
+  * thiết lập loại Audio Stream cho MediaPlayer tham số truyền vào là ``AudioManager.STREAM_MUSIC``
+    * ``mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);``
+  * thiết lập DataSource (đường dẫn chứa file Sound) cho MediaPlayer
+    * ``mediaPlayer.setDataSource(urlMP3);``
+  * gọi ``prepareAsync()`` để load dữ liệu từ những thông tin đã thiết lập cho MediaPlayer
+    * ``mediaPlayer.prepareAsync();``
+  * gọi phương thức Listener khi dữ liệu đã chuẩn bị hoàn tất cho MediaPlayer, truyền vào Anonymous Object ``OnPreparedListener``
+    * ```java
+      mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+          @Override
+          public void onPrepared(MediaPlayer mp) {
+              mp.start();
+          }
+      });
+      ```
+  * override phương thức ``onPrepared(MediaPlayer)`` của interface ``OnPreparedListener``, trong phương thức ta start() đối tượng MediaPlayer được truyền vào
+    * ```java
+        @Override
+        public void onPrepared(MediaPlayer mp) {
+            mp.start();
+        }
+     ```
+______________________________________________________________________________________
+* file **AndroidManifest.xml**
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hienqp.sound">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Sound">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+```
+______________________________________________________________________________________
+* file **activity_main.xml**
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/button_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Play Mp3 Online"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_load"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/button_play"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+______________________________________________________________________________________
+* file **MainActivity.java**
+```java
+package com.hienqp.sound;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+
+import java.io.IOException;
+
+public class MainActivity extends AppCompatActivity {
+    String urlMP3 = "https://khoapham.vn/download/vietnamoi.mp3";
+
+    Button buttonPlay;
+    ProgressBar progressBarLoad;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        captureViewObjectFromLayout();
+
+        progressBarLoad.setVisibility(View.GONE);
+        buttonPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MediaPlayer mediaPlayer = new MediaPlayer();
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                try {
+                    mediaPlayer.setDataSource(urlMP3);
+                    mediaPlayer.prepareAsync();
+                    progressBarLoad.setVisibility(View.VISIBLE);
+                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                            progressBarLoad.setVisibility(View.GONE);
+                            mp.start();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void captureViewObjectFromLayout() {
+        buttonPlay = (Button) findViewById(R.id.button_play);
+        progressBarLoad = (ProgressBar) findViewById(R.id.progressBar_load);
+    }
+}
+```
+
+## 55.2. Media Online Video <a id="55.2"></a>
+______________________________________________________________________________________
+* việc phát Video từ Server Online tương tự như phát Video từ Local
+* đầu tiên phải khai báo quyền sử dụng INTERNET trong AndroidManifest.xml
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+....
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+...
+</manifest>
+```
+* chuẩn bị 1 đường dẫn đến Server Online chứa file Video
+  * ``String url = "https://khoapham.vn/download/vuoncaovietnam.mp4";``
+* dựng 1 VideoView dùng để chứa Video được phát
+* khởi tạo đối tượng Uri từ phương thức ``Uri.parse(String)`` tham số truyền vào là đường dẫn đến Server file Video
+  * ``Uri uri = Uri.parse(url);``
+* thiết lập Video Uri cho VideoView
+  * ``videoView.setVideoURI(uri);``
+* start() Video từ Uri chỉ định thông qua VideoView
+  * ``videoView.start();``
+* ngoài ra có thể thiết lập MediaController cho VideoView để điều khiển các thao tác dừng, kế tiếp, hay trở về trên VideoView
+  * ``MediaController mediaController = new MediaController(MainActivity.this);`` <br/>
+  ``videoView.setMediaController(mediaController);``
+
+______________________________________________________________________________________
+* file **AndroidManifest.xml**
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hienqp.video">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Video">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+```
+
+______________________________________________________________________________________
+* file **activity_main.xml**
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/button_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Play MP4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="0dp"
+        android:layout_height="282dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_play" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+
+______________________________________________________________________________________
+* file **MainActivity.java**
+```java
+package com.hienqp.video;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.MediaController;
+import android.widget.VideoView;
+
+public class MainActivity extends AppCompatActivity {
+    Button buttonPlay;
+    VideoView videoView;
+
+    String url = "https://khoapham.vn/download/vuoncaovietnam.mp4";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        captureViewObjectFromLayout();
+
+        buttonPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse(url);
+                videoView.setVideoURI(uri);
+                MediaController mediaController = new MediaController(MainActivity.this);
+                videoView.setMediaController(mediaController);
+                videoView.start();
+            }
+        });
+    }
+
+    private void captureViewObjectFromLayout() {
+        buttonPlay = (Button) findViewById(R.id.button_play);
+        videoView = (VideoView) findViewById(R.id.videoView);
+    }
+}
+```
+
+______________________________________________________________________________________
+______________________________________________________________________________________
+______________________________________________________________________________________
+# 56. SQLite - Local DataBase Trong Android (Cơ Sỡ Dữ Liệu Cục Bộ) <a id="56"></a>
+______________________________________________________________________________________
+## 56.1. SQLite database <a id="56.1"></a>
+______________________________________________________________________________________
+* SQLite là một cơ sở dữ liệu SQL mã nguồn mở, nó lưu trữ dữ liệu vào một tập tin văn bản trên một thiết bị. mặc định đã được tích hợp trên thiết bị Android.
+* Để truy cập dữ liệu này, bạn không cần phải thiết lập bất kỳ loại kết nối nào cho nó như JDBC, ODBC, ...
+
+
+### 56.2. Cách sử dụng SQLite <a id="56.2"></a>
+______________________________________________________________________________________
+* Đầu tiên, để thao tác với SQLite, ta phải dùng 2 đối tượng
+  * SQLiteOpenHelper: đối tượng dùng để tạo, nâng cấp, đóng mở kết nối CSDL
+  * SQLiteDatabase: đối tượng dùng để thực thi các câu lệnh SQL trên một CSDL
+
+### 56.2.1. SQLiteOpenHelper <a id="56.2.1"></a>
+______________________________________________________________________________________
+#### SQLiteOpenHelper
+______________________________________________________________________________________
+```java
+public abstract class SQLiteOpenHelper implements AutoCloseable {
+    
+}
+```
+
+#### SQLiteOpenHelper có 2 Constructor
+______________________________________________________________________________________
+* một constructor 4 tham số, ta chủ yếu làm việc với constructor 4 tham số
+```java
+public SQLiteOpenHelper(
+        @Nullable Context context, 
+            @Nullable String name,
+                @Nullable CursorFactory factory, 
+                    int version) {
+    //...
+}
+```
+
+Data Type      |Parameter Name |Description
+_______________|_______________|________________________________________________________
+Context        |context        |Context là một lớp trừu tượng của hệ thống, chứa thông tin môi trường ứng dụng, cung cấp các phương thức để có thể tương tác với hệ điều hành, giúp chúng ta dễ dàng truy cập và tương tác tới các tài nguyên của hệ thống...
+String         |name           |tên chỉ định cho database
+CursorFactory  |factory        |con trỏ dùng để query data, ở constructor này thường để ``null``
+int            |version        |chỉ định số phiên bản của database (bắt đầu từ 1)
+______________________________________________________________________________________
+* một constructor 5 tham số
+```java
+public SQLiteOpenHelper(
+        @Nullable Context context, 
+            @Nullable String name,
+                @Nullable CursorFactory factory, 
+                    int version,
+                        @Nullable DatabaseErrorHandler errorHandler) {
+    //...
+}
+```
+
+#### khi ``extends SQLiteOpenHelper`` ta phải override 2 phương thức: ``onCreate()`` và ``onUpgrade()``
+______________________________________________________________________________________ 
+* ``onCreate()``
+  * khi ta yêu cầu truy cập database nhưng database chưa được khởi tạo phương thức này sẽ  được gọi bởi Framework.
+  * ở đây ta phải viết code khởi tạo database, cụ thể là khởi tạo bảng (chú ý: khi khởi tạo bảng phải đặt ID là khóa chính)
+```java
+@Override
+public void onCreate(SQLiteDatabase db) {
+
+}
+```
+______________________________________________________________________________________ 
+* ``onUpgrade()``
+  * phương thức này được dùng khi ứng dụng của bạn có nhiều phiên bản database đc thêm vào.
+  * Nó sẽ cập nhật database hiện có hoặc khởi tạo lại thông qua onCreate().
+```java
+@Override
+public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+}
+```
+
+#### SQLiteOpenHelper có 2 phương thức dùng để khởi tạo SQLiteDatabase
+______________________________________________________________________________________ 
+* ``getWritableDatabase()``
+  * dùng để tạo hoặc mở 1 database dùng để ĐỌC VÀ GHI
+```java
+public SQLiteDatabase getWritableDatabase() {
+    //...
+}
+```
+______________________________________________________________________________________ 
+* ``getReadableDatabase()``
+  * dùng để tạo hoặc mở 1 database dùng để CHỈ ĐỌC
+```java
+public SQLiteDatabase getReadableDatabase() {
+    //...    
+}
+```
+
+### 56.2.2. SQLiteDatabase <a id="56.2.2"></a>
+______________________________________________________________________________________
+#### SQLiteDatabase
+______________________________________________________________________________________
+```java
+public final class SQLiteDatabase extends SQLiteClosable {
+    
+}
+```
+
+#### SQLiteDatabase Methods
+______________________________________________________________________________________
+* SQLiteDatabase có các phương thức sau dùng để làm việc với **SQLite**
+
+Method      |Description
+____________|_________________________________________________________________________
+insert()    |dùng để chèn thêm 1 dòng vào database
+update()    |dùng để cập nhật (sửa đổi) 1 dòng trong database
+delete()    |dùng để xóa 1 dòng trong database
+query()     |dùng để truy vấn database và trả về Cursor
+rawQuery()  |dùng để truy vấn database từ câu lệnh SQL trực tiếp và trả về Cursor
+execSQL()   |thực thi câu lệnh SQL trực tiếp vào database nhưng không trả về dữ liệu (CREATE, INSERT, UPDATE, DELETE, ...)
+
+##### query()
+______________________________________________________________________________________
+* phương thức query() dùng để truy vấn vào database, và dữ liệu trả về là 1 con trỏ Cursor
+  * ``public Cursor query()``
+* có 4 phương thức nạp chồng query() với những tham số khác nhau như sau:
+______________________________________________________________________________________
+* phương thức 1
+```java
+public Cursor query(
+                boolean distinct, 
+                String table, 
+                String[] columns, 
+                String selection, 
+                String[] selectionArgs, 
+                String groupBy, 
+                String having, 
+                String orderBy, 
+                String limit
+        ) {
+    //...
+}
+```
+______________________________________________________________________________________
+* phương thức 2
+```java
+public Cursor query(
+                boolean distinct, 
+                String table, 
+                String[] columns,
+                String selection, 
+                String[] selectionArgs, 
+                String groupBy,
+                String having, 
+                String orderBy, 
+                String limit, 
+                CancellationSignal cancellationSignal
+        ) {
+    //...
+}
+```
+______________________________________________________________________________________
+* phương thức 3
+```java
+public Cursor query(
+                String table, 
+                String[] columns, 
+                String selection,
+                String[] selectionArgs, 
+                String groupBy, 
+                String having,
+                String orderBy
+        ) {
+    //...
+}
+```
+______________________________________________________________________________________
+* phương thức 4
+```java
+public Cursor query(
+                String table, 
+                String[] columns, 
+                String selection,
+                String[] selectionArgs, 
+                String groupBy, 
+                String having,
+                String orderBy, 
+                String limit
+        ) {
+    //...
+}
+```
+______________________________________________________________________________________
+* các tham số của phương thức query()
+
+Return Data Type   |Parameter Name       |Description
+___________________|_____________________|______________________________________________
+boolean            | distinct            |``true`` nếu muốn mỗi dòng là duy nhất (không trùng lặp)
+String             | table               |tên table của database (tên của database và tên table là khác nhau)
+String[]           | columns             |mảng các cột sẽ trả về (tương tự lệnh SQL SELECT cột_1 cột_2 ...), <br/> để ``null`` sẽ trả về tất cả các cột (tương tự lệnh SQL SELECT *)
+String             | selection           |lệnh SQL điều kiện để 1 dòng được trả về, để ``null`` thì tất cả các dòng đều được trả về từ table chỉ định
+String[]           | selectionArgs       |thường để ``null``
+String             | groupBy             |thường để ``null``
+String             | having              |thường để ``null``
+String             | orderBy             |thường để ``null``
+String             | limit               |giới hạn số dòng được trả về, để ``null`` thì không giới hạn số dòng được trả về
+CancellationSignal | cancellationSignal  |thường để ``null``
+
+##### insert()
+______________________________________________________________________________________
+* phương thức này dùng để chèn 1 dòng vào table, nếu dòng truyền vào hoàn toàn rỗng thì giá trị ``null`` sẽ được chèn vào table
+* phương thức insert()
+```java
+public long insert(String table, String nullColumnHack, ContentValues values) {
+    //...
+}
+```
+* các tham số truyền vào insert()
+
+Return Data Type   |Parameter Name       |Description
+___________________|_____________________|______________________________________________
+String             |table                |tên table
+String             |nullColumnHack       |thường để ``null`` (khi values empty, tham số này sẽ được sử dụng)
+ContentValues      |values               |đây là kiểu dữ liệu Map, chứa các cặp key/value, key là tên cột, value là giá trị của cột, các cặp key/value tạo thành 1 dòng
+
+* ví dụ ta tạo 1 dòng sau đó insert dòng đó vào table
+```java
+// tạo 1 dòng, với các cột full_name, student_id, gender, year, kèm với giá trị tương ứng
+ContentValues row = new ContentValues();
+row.put("full_name", "vncoder.vn");
+row.put("student_id", "2021");
+row.put("gender", 1);
+row.put("year", 21);
+        
+// insert dòng vừa tạo vào table
+database.insert(DATABASE_NAME,null,row);
+```
+
+##### update()
+______________________________________________________________________________________ 
+* phương thức này dùng để cập nhật thay đổi cho các dòng trong bảng của database
+* phương thức update()
+```java
+public int update(String table, ContentValues values, String whereClause, String[] whereArgs) {
+    //...
+}
+```
+
+* các tham số truyền vào update()
+
+Return Data Type   |Parameter Name       |Description
+___________________|_____________________|______________________________________________
+String             |table                |tên table
+ContentValues      |values               |đây là kiểu dữ liệu Map, chứa các cặp key/value, key là tên cột, value là giá trị của cột, các cặp key/value tạo thành 1 dòng
+String             |whereClause          |(vị trí update) chuỗi lệnh SQL WHERE clause để xác nhận update, nếu để ``null`` thì update sẽ áp dụng cho tất cả các dòng, <br/>có thể thêm dấu ``?`` vào whereClause, dấu ``?`` sẽ được thay thế bởi whereArgs 
+String[]           |whereArgs            |(giá trị chỉ định cho vị trí update) nếu whereClause chứa dấu ``?``, nếu đã chỉ định whereArgs rõ ở whereClause, thì tham số này có thể để ``null``
+
+* Ví dụ, ta có một đối tượng sinh viên được lưu trữ trong CSDL như sau
+  * _id = 2 (khóa chính)
+  * full_name = “vncoder.vn"
+  * student_id = “20192010”
+  * gender = 1
+  * year = 21
+
+* và một đối tượng SQLiteDatabase là sqlDB.
+* Ta muốn update bản ghi này cho year = 22.
+* Đầu tiên cần lấy ra được bản ghi, sử dụng câu lệnh query()
+```java
+Cursor cursor = null;
+cursor = sqlDB.query(
+        TABLE_NAME, null, 
+        "student_id = " + studentID, 
+        null, 
+        null, 
+        null, 
+        null
+        );
+
+cursor.moveToFirst();
+
+SinhVien sv = new SinhVien(
+        cursor.getInt(0),
+        cursor.getString(1), 
+        cursor.getString(2), 
+        cursor.getInt(3), 
+        22
+        );
+```
+* ở đây điều quan trọng là ta lấy ra được khóa chính ``_id`` là ``cursor.getInt(0)``, sau đó gán thuộc tính ``year`` 
+của đối tượng **sv** có ``_id = cursor.getInt(0)``
+* đây chính là điểm mấu chốt giúp ta có được điều kiện update
+* tiếp theo ta thực hiện update
+```java
+ContentValues ct = new ContentValues();
+
+ct.put("full_name", sv.fullName);
+ct.put("student_id", sv.studentID);
+ct.put("gender", sv.gender);
+ct.put("year", sv.year);
+
+sqlDB.update(TABLE_NAME, ct, "_id = " + sv.id, null );
+```
+
+#### ContentValues
+______________________________________________________________________________________
+* các đối tượng ContentValues cho phép xác định ``key-value`` (ContentValues là 1 cấu trúc Map)
+  * ``key`` đại diện nhận dạng cột của table
+  * ``value`` đại diện nội dung bản ghi (record) của ``key`` tương ứng
+* ContentValues có thể được sử để ``insert`` và ``update`` các mục của database
+* Ví dụ:
+```java
+ContentValues ct = new ContentValues();
+ct.put("full_name", "vncoder.vn");
+ct.put("student_id", "20192010");
+ct.put("gender", 1);
+ct.put("year", 21);
+```
+* full_name, student_id, gender, year là tên các cột, và bên cạnh là giá trị của chúng.
+
+#### Cursor
+______________________________________________________________________________________
+* đối tượng Cursor hiểu đơn giản là 1 con trỏ, trỏ đến kết quả trả về của câu truy vấn
+* ví dụ con trỏ này trỏ đến table trả về của câu truy vấn
+```java
+Cursor cursor = database.query(TABLE_NAME, null, null, null, null, null, null);
+```
+* 1 số phương thức của Cursor
+  * ``cursor.getCount();`` - trả về số dòng trong table
+  * ``cursor.moveToFirst();`` - di chuyển con trỏ đến dòng đầu tiên của table
+  * ``cursor.moveToNext();`` - di chuyển con trỏ đến dòng tiếp theo
+  * ``cursor.isAfterLast();`` - trả về ``true`` nếu con trỏ ra khỏi dòng cuối cùng trong table
+  * ``cursor.getString(int keyPosition);`` - lấy giá trị kiểu String ở cột chỉ định (giá trị của cột trong table bắt đầu từ 0)
+  * ``cursor.getInt(int keyPosition);`` - lấy giá trị kiểu int ở cột chỉ định
